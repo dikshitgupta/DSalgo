@@ -5,13 +5,13 @@ public:
     /** Initialize your data structure here. */
     Trie * arr[128]; 
     bool endOfWord;
-    
-    
+
     Trie() {
         this->endOfWord=false;
-        for(int i=0;i<70;i++){
+        for(int i=0;i<128;i++){
             this->arr[i]=NULL;
         }
+        cout<<"fkin constructsor"<<endl;
     }
     
     /** Inserts a word into the trie. */
@@ -51,7 +51,6 @@ public:
         return true;
     }
 };
-
 /**
  * Your Trie object will be instantiated and called as such:
  * Trie* obj = new Trie();
@@ -59,3 +58,11 @@ public:
  * bool param_2 = obj->search(word);
  * bool param_3 = obj->startsWith(prefix);
  */
+int main(){
+Trie *obj=new Trie();
+cout<<"size is :"<<sizeof(*obj)<<endl;
+obj->insert("dikshit");
+cout<<obj->search("diksh");
+cout<<obj->search("dikshit");
+return 0;
+}
