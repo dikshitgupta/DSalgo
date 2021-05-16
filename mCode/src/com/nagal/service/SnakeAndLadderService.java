@@ -3,12 +3,12 @@ package com.nagal.service;
 import com.nagal.models.Ladder;
 import com.nagal.models.Player;
 import com.nagal.models.Snake;
-import com.nagal.models.SnakeAndLadderboard;
+import com.nagal.models.SnakeAndLadderBoard;
 
 import java.util.*;
 
 public class SnakeAndLadderService {
-	private SnakeAndLadderboard snakeandLadderboard;
+	private SnakeAndLadderBoard snakeAndLadderBoard;
 	private int playerCount;
 	private Queue<Player> players;
 	private Boolean isGameCompleted;
@@ -19,13 +19,13 @@ public class SnakeAndLadderService {
 	private static final int DEFAULT_BOARD_SIZE=100;
 	private static final int DEFAULT_DICES=1;
 
-	public SnakeAndLadderService(int boardsize){
-		this.snakeandLadderboard=new SnakeAndLadderboard(boardsize);
+	public SnakeAndLadderService(int boardSize){
+		this.snakeAndLadderBoard=new SnakeAndLadderBoard(boardSize);
 		this.players=new LinkedList<Player>();
 	}
 
 	public SnakeAndLadderService(){
-		this.snakeandLadderboard=new SnakeAndLadderboard(SnakeAndLadderService.DEFAULT_BOARD_SIZE);
+		this.snakeAndLadderBoard=new SnakeAndLadderBoard(SnakeAndLadderService.DEFAULT_BOARD_SIZE);
 	}
 
 	public void setContinueTillLastPlayer(Boolean continueTillLastPlayer) {
@@ -44,28 +44,28 @@ public class SnakeAndLadderService {
 			this.players.add(player);
 			playerPieces.put(player.getId(),0);
 		}
-		snakeandLadderboard.setPlayerPieces(playerPieces);
+		snakeAndLadderBoard.setPlayerPieces(playerPieces);
 	}
 
 	public void setSnakes(List<Snake> snakes){
-		snakeandLadderboard.setSnakes(snakes);
+		snakeAndLadderBoard.setSnakes(snakes);
 	}
 
 	public void setLadders(List<Ladder> ladders){
-		snakeandLadderboard.setLadders(ladders);
+		snakeAndLadderBoard.setLadders(ladders);
 	}
 
 	int getNewPositionAfterSnakesAndLadders(int position){
 		int prev;
 		do{
 			prev=position;
-			for(Snake snake : snakeandLadderboard.getSnakes()) {
+			for(Snake snake : snakeAndLadderBoard.getSnakes()) {
 				if(snake.getStart()==prev){
-				position=snake.getEnd();
+					position=snake.getEnd();
 				}
 			}
 
-			for(Ladder ladder : snakeandLadderboard.getLadders()) {
+			for(Ladder ladder : snakeAndLadderBoard.getLadders()) {
 				if(ladder.getStart()==prev){
 					position=ladder.getEnd();
 				}
@@ -76,21 +76,25 @@ public class SnakeAndLadderService {
 	}
 
 	public void movePlayer(Player player,int positions){
-		int oldPosition=snakeandLadderboard.getPlayerPieces().get(player.getId());
+		int oldPosition=snakeAndLadderBoard.getPlayerPieces().get(player.getId());
 		int newPosition=oldPosition + positions;
 
-		int boardSize=snakeandLadderboard.getSize();
-		if(newPosition>oldPosition){
+//		System.out.printf("Moving player %s",player.getName());
+
+		int boardSize=snakeAndLadderBoard.getSize();
+		if(newPosition>snakeAndLadderBoard.getSize()){
 			newPosition=oldPosition;
 		}
-		else newPosition=getNewPositionAfterSnakesAndLadders(newPosition);
+		else
+		newPosition=getNewPositionAfterSnakesAndLadders(newPosition);
 
-		snakeandLadderboard.getPlayerPieces().put(player.getId(),newPosition);
+		snakeAndLadderBoard.getPlayerPieces().put(player.getId(),newPosition);
 	}
 
 	private Boolean hasPlayerWon(Player player){
-		int position=snakeandLadderboard.getPlayerPieces().get(player.getId());
-		return position==snakeandLadderboard.getSize();
+		int position=snakeAndLadderBoard.getPlayerPieces().get(player.getId());
+		System.out.printf("    pos: %d \n",position);
+		return position==snakeAndLadderBoard.getSize();
 	}
 
 	private Boolean isGameCompleted(){
@@ -102,13 +106,19 @@ public class SnakeAndLadderService {
 		while(!isGameCompleted()){
 			Player currentPlayer=players.poll();
 			int diceValue= DiceService.roll();
+
+			System.out.printf("%s: %d ",currentPlayer.getName(),diceValue);
+			movePlayer(currentPlayer,diceValue);
+
 			if(hasPlayerWon(currentPlayer)){
 				System.out.println(currentPlayer.getName() + "won the game");
-				snakeandLadderboard.getPlayerPieces().remove(currentPlayer.getId());
+				snakeAndLadderBoard.getPlayerPieces().remove(currentPlayer.getId());
 			}
 			else{
 				players.add(currentPlayer);
 			}
+
 		}
 	}
+
 }

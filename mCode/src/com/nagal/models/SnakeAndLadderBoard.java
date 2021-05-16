@@ -1,18 +1,17 @@
 package com.nagal.models;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SnakeAndLadderboard {
+public class SnakeAndLadderBoard {
 
 	private int size;
 	private List<Snake> snakes;
 	private List<Ladder> ladders;
-	private Map< String,Integer> playerPieces;
+	private Map< String,Integer > playerPieces;  // String is the name and Integer where that player is present.
 
-	public SnakeAndLadderboard(int size){
+	public SnakeAndLadderBoard(int size){
 	this.size=size;
 	this.snakes=new ArrayList<Snake>();
 	this.ladders=new ArrayList<Ladder>();
