@@ -34,7 +34,6 @@
 *.out
 *.app
 
-*/
 */target
 
 .DS_Store
