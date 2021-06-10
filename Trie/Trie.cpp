@@ -50,6 +50,7 @@ public:
         }
         return true;
     }
+
 };
 /**
  * Your Trie object will be instantiated and called as such:
@@ -62,7 +63,9 @@ int main(){
 Trie *obj=new Trie();
 cout<<"size is :"<<sizeof(*obj)<<endl;
 obj->insert("dikshit");
-cout<<obj->search("diksh");
-cout<<obj->search("dikshit");
+obj->insert("dravid");
+cout<<obj->search("diksh")<<endl;
+cout<<obj->search("dikshit")<<endl;
+cout<<obj->startsWith("dravi");
 return 0;
 }
