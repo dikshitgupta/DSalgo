@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.awt.desktop.SystemEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -17,20 +18,20 @@ public class TTTService {
 	private int moveNumber;
 	private User user1,user2;
 
-	public static void printArl(List <List <Character> > arr){
-		for(int i=0;i<arr.size();i++){
-			for(int j=0;j<arr.size();j++) {
-				System.out.printf("%c ",arr.get(i).get(j));
-			}
-			System.out.printf("\n");
-		}
-		System.out.printf("\n");
-	}
+//	public static void printArl(List <List <Character> > arr){
+//		for(int i=0;i<arr.size();i++){
+//			for(int j=0;j<arr.size();j++) {
+//				System.out.printf("%c ",arr.get(i).get(j));
+//			}
+//			System.out.printf("\n");
+//		}
+//		System.out.printf("\n");
+//	}
 
 	public TTTService(int size,String userA,String userB) {
 		this.location = new ArrayList <List <Character> >(size);
 		this.size = size;
-		this.moveNumber=0;
+		this.moveNumber=1;
 		this.user1=new User(userA,'X');
 		this.user2=new User(userB,'O');
 
@@ -54,6 +55,7 @@ public class TTTService {
 	}
 
 	public Boolean validMove(int x,int y){
+		if(x<1 || x>size || y<1 || y>size) return false;
 		if(location.get(x-1).get(y-1)=='O' || location.get(x-1).get(y-1)=='X') return false;
 		return true;
 	}
@@ -64,17 +66,12 @@ public class TTTService {
 			return;
 		}
 		System.out.printf("move is %d\n",moveNumber);
-		if(moveNumber%2==0) location.get(x-1).set(y-1,'X');
-		else location.get(x-1).set(y-1,'O');
+		if(moveNumber%2==0) location.get(x-1).set(y-1,'O');
+		else location.get(x-1).set(y-1,'X');
 		moveNumber++;
 		return;
-
-
 	}
 
-//	O O O
-//	- - -
-//	- - -
 
 	public String isFinished(){
 
@@ -84,32 +81,40 @@ public class TTTService {
 		for(int i=0;i<size;i++){
 			int countO=0;
 			int countX=0;
+			int columnO=0;
+			int columnX=0;
+
 			for(int j=0;j<size;j++) {
 				char ch=location.get(i).get(j);
-				if(ch=='-') break;
-				else if(ch=='O') countO++;
-				else countX++;
+				char chColumn=location.get(j).get(i);
+
+				if(ch=='O') countO++;
+				else if(ch=='X') countX++;
+
+				if(chColumn=='O') columnO++;
+				else if(chColumn=='X') columnX++;
 
 				if(i==j){
 					if(ch=='O') countD1--;
 					if(ch=='X') countD1++;
 				}
 
-				if(i+j==size+1){
-					if(ch=='O') countD2--;
-					if(ch=='X') countD2++;
+				if(i+j==size+1) {
+					if (ch == 'O') countD2--;
+					if (ch == 'X') countD2++;
 				}
 			}
 
-			if(countX==size || countD2==size || countD1==size){
-				System.out.printf("user 1 is %s \n",user1.getUsername());
+			if(countX==size || countD2==size || countD1==size || columnX==size){
+				System.out.printf("won by %s \n",user1.getUsername());
 				return user1.getUsername();
 			}
-			if(countO==size || countD2==-1*size || countD1==-1*size ) return user2.getUsername();
+			if(columnO==size || countO==size || countD2==-1*size || countD1==-1*size ) {
+				System.out.printf("won by %s \n",user2.getUsername());
+				return user2.getUsername();
+			}
 		}
-
 	return null;
-
 	}
 
 }

@@ -12,7 +12,7 @@ public class TIcTacToeApplication {
 		TTTService tttService=new TTTService(3,"dikshit","kartik");
 
 		Scanner scanner=new Scanner(System.in);
-
+		tttService.printGame();
 		while(tttService.isFinished()==null){
 			String input=scanner.nextLine();
 			String [] inputs=input.split(" ");
