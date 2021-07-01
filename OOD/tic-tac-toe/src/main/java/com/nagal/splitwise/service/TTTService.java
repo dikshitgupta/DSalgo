@@ -1,92 +1,56 @@
 package com.nagal.splitwise.service;
 
+import com.nagal.splitwise.models.Board;
 import com.nagal.splitwise.models.User;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.awt.desktop.SystemEventListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@Getter
-@Setter
+
+@Service
 public class TTTService {
-	private List <List<Character>> location;
-	private int size;
-	private int moveNumber;
-	private User user1,user2;
 
-//	public static void printArl(List <List <Character> > arr){
-//		for(int i=0;i<arr.size();i++){
-//			for(int j=0;j<arr.size();j++) {
-//				System.out.printf("%c ",arr.get(i).get(j));
-//			}
-//			System.out.printf("\n");
-//		}
-//		System.out.printf("\n");
-//	}
-
-	public TTTService(int size,String userA,String userB) {
-		this.location = new ArrayList <List <Character> >(size);
-		this.size = size;
-		this.moveNumber=1;
-		this.user1=new User(userA,'X');
-		this.user2=new User(userB,'O');
-
-		for(int i=0;i<size;i++) {
-			ArrayList<Character> temp= new ArrayList<>(size);
-			for(int j=0;j<size;j++){
-				temp.add('-');
-			}
-			location.add(temp);
-		}
-	}
-
-	public void printGame(){
-		for(int i=0;i<size;i++){
-			for(int j=0;j<size;j++) {
-				System.out.printf("%c ",location.get(i).get(j));
-			}
-			System.out.printf("\n");
-		}
-		System.out.printf("\n");
-	}
+	@Autowired
+	Board board;
 
 	public Boolean validMove(int x,int y){
-		if(x<1 || x>size || y<1 || y>size) return false;
-		if(location.get(x-1).get(y-1)=='O' || location.get(x-1).get(y-1)=='X') return false;
+		if(x<1 || x> board.getSize()|| y<1 || y>board.getSize()) return false;
+		if(board.getLocation().get(x-1).get(y-1)=='O' || board.getLocation().get(x-1).get(y-1)=='X') return false;
 		return true;
 	}
 
-	public void playMove(int x,int y){
+	public void playMove(int x,int y) {
 		if(!validMove(x,y)) {
 			System.out.printf("Your input %d  %d was invalid please re enter valid choice to play \n", x, y);
 			return;
 		}
-		System.out.printf("move is %d\n",moveNumber);
-		if(moveNumber%2==0) location.get(x-1).set(y-1,'O');
-		else location.get(x-1).set(y-1,'X');
-		moveNumber++;
+		System.out.printf("move is %d\n",board.getMoveNumber());
+		if(board.getMoveNumber()%2==0) board.getLocation().get(x-1).set(y-1,'O');
+		else board.getLocation().get(x-1).set(y-1,'X');
+		board.incMoveNumber();
 		return;
 	}
 
+	public  List<List <Character>> getState() {
+		return board.getLocation();
+	}
 
 	public String isFinished(){
 
 		int countD1=0; // +1 for X , -1 for O;
 		int countD2=0; // +1 for X , -1 for O;
 
-		for(int i=0;i<size;i++){
+		for(int i=0;i<board.getSize();i++){
 			int countO=0;
 			int countX=0;
 			int columnO=0;
 			int columnX=0;
 
-			for(int j=0;j<size;j++) {
-				char ch=location.get(i).get(j);
-				char chColumn=location.get(j).get(i);
+			for(int j=0;j<board.getSize();j++) {
+				char ch=board.getLocation().get(i).get(j);
+				char chColumn=board.getLocation().get(j).get(i);
 
 				if(ch=='O') countO++;
 				else if(ch=='X') countX++;
@@ -99,19 +63,19 @@ public class TTTService {
 					if(ch=='X') countD1++;
 				}
 
-				if(i+j==size+1) {
+				if(i+j==board.getSize()+1) {
 					if (ch == 'O') countD2--;
 					if (ch == 'X') countD2++;
 				}
 			}
 
-			if(countX==size || countD2==size || countD1==size || columnX==size){
-				System.out.printf("won by %s \n",user1.getUsername());
-				return user1.getUsername();
+			if(countX==board.getSize() || countD2==board.getSize() || countD1==board.getSize() || columnX==board.getSize()){
+				System.out.printf("won by %s \n",board.getUser1().getUsername());
+				return board.getUser1().getUsername();
 			}
-			if(columnO==size || countO==size || countD2==-1*size || countD1==-1*size ) {
-				System.out.printf("won by %s \n",user2.getUsername());
-				return user2.getUsername();
+			if(columnO==board.getSize() || countO==board.getSize() || countD2==-1*board.getSize() || countD1==-1*board.getSize() ) {
+				System.out.printf("won by %s \n",board.getUser2().getUsername());
+				return board.getUser2().getUsername();
 			}
 		}
 	return null;
