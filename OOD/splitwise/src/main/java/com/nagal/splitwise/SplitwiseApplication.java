@@ -69,6 +69,7 @@ public class SplitwiseApplication {
 							expenseManager.addExpense(ExpenseType.PERCENT, amount, paidBy, splits);
 							break;
 					}
+
 					break;
 				}
 		}

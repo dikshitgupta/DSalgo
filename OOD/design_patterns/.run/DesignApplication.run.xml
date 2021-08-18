@@ -6,7 +6,7 @@
     <module name="design_patterns" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.nagal.design.singleton.*" />
+        <option name="PATTERN" value="com.nagal.design.designPatterns.singleton.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

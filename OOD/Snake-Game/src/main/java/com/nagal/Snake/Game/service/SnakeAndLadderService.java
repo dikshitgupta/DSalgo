@@ -9,12 +9,10 @@ import java.util.*;
 
 public class SnakeAndLadderService {
 
-
 	private SnakeAndLadderBoard snakeAndLadderBoard;
 	private int playerCount;
 	private Queue<Player> players;
 	private Boolean isGameCompleted;
-
 
 	private int noOfDices;
 	private Boolean continueTillLastPlayer;

@@ -2,7 +2,6 @@ package com.nagal.splitwise.models.expense;
 
 import com.nagal.splitwise.models.User;
 import com.nagal.splitwise.models.split.Split;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class Expense {
+public abstract class                                                                                                                                                                                                                                        Expense {
 
 	private String id;
 	private double amount;

@@ -12,9 +12,10 @@ public class ExpenseService {
 	public static Expense createExpense(ExpenseType expenseType, double amount, User paidby, List<Split> splits){
 		switch (expenseType){
 			case EXACT:
-				System.out.printf("in create expense: %s",paidby);
+				System.out.printf("Exact expense ");
 				return new ExactExpense(amount,paidby,splits);
 			case PERCENT:
+				System.out.printf("Percent expense");
 				for(Split split:splits){
 					PercentSplit percentSplit=(PercentSplit) split;
 					split.setAmount(amount*percentSplit.getPercent()/100);
@@ -31,5 +32,6 @@ public class ExpenseService {
 			default:
 				return null;
 		}
+
 	}
 }

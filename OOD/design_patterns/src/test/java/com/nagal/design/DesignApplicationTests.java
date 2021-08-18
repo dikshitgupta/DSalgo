@@ -1,7 +1,7 @@
 package com.nagal.design;
 
-import com.nagal.design.prototype.MangoTree;
-import com.nagal.design.prototype.Position;
+import com.nagal.design.designPatterns.prototype.MangoTree;
+import com.nagal.design.designPatterns.prototype.Position;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

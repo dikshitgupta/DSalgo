@@ -19,7 +19,7 @@ class thread2 implements Runnable{
 }
 
 
-public class multi_run {
+public class multi_runnable {
 	public static void main(String[] args) {
 
 		thread1 t1=new thread1();

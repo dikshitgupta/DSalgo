@@ -18,16 +18,6 @@ public class TTTService {
 	private int moveNumber;
 	private User user1,user2;
 
-//	public static void printArl(List <List <Character> > arr){
-//		for(int i=0;i<arr.size();i++){
-//			for(int j=0;j<arr.size();j++) {
-//				System.out.printf("%c ",arr.get(i).get(j));
-//			}
-//			System.out.printf("\n");
-//		}
-//		System.out.printf("\n");
-//	}
-
 	public TTTService(int size,String userA,String userB) {
 		this.location = new ArrayList <List <Character> >(size);
 		this.size = size;

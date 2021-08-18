@@ -13,9 +13,9 @@ public class SnakeAndLadderBoard {
 
 	public SnakeAndLadderBoard(int size){
 	this.size=size;
-	this.snakes=new ArrayList<Snake>();
-	this.ladders=new ArrayList<Ladder>();
-	this.playerPieces=new HashMap<String, Integer>();  // id of a player and it's position in the board.
+	this.snakes=new ArrayList<>();
+	this.ladders=new ArrayList<>();
+	this.playerPieces=new HashMap<>();  // id of a player and it's position in the board.
 	}
 
 	public void setSnakes(List<Snake> snakes) {
