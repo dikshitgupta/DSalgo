@@ -53,44 +53,38 @@ for(int i=0;i<vis.size();i++){
 }
 }
 
-
-
-// start from a node where indegree =0
-// then we move from there to another nodes.
-//
-
 void topo_dfs(vector <int> adj[] ,int n){
 
-    vector <bool> vis(n,false);
-    vector <int> in_degree(n,0);
-    for(int i=0;i<n;i++){
-        for(int j=0;j<adj[i].size();j++){
-            in_degree[adj[i][j]]++;
-            // cout<<"i "<<adj[i][j]<<"indegree "<<in_degree[adj[i][j]]<<endl;
-        }
+vector <bool> vis(n,false);
+vector <int> in_degree(n,0);
+for(int i=0;i<n;i++){
+    for(int j=0;j<adj[i].size();j++){
+        in_degree[adj[i][j]]++;
+        // cout<<"i "<<adj[i][j]<<"indegree "<<in_degree[adj[i][j]]<<endl;
     }
+}
 
-    queue <int> q;
-    for(int i=0;i<n;i++){
-        if(in_degree[i]==0) q.push(i);
-    } 
+queue <int> q;
+for(int i=0;i<n;i++){
+    if(in_degree[i]==0) q.push(i);
+} 
 
-    int cnt=0; // count of traversed edges.
+int cnt=0; // count of traversed edges.
 
-    while(!q.empty()){
-        int u=q.front();
-        q.pop();
-        cout<<" "<<u<<" ";
-        vis[u]=true;
-        for(int i=0;i<adj[u].size();i++){
-            --in_degree[adj[u][i]];
-            if(in_degree[adj[u][i]]==0 && !vis[adj[u][i]]) 
-                q.push(adj[u][i]);
-        }
-        cnt++;
+while(!q.empty()){
+    int u=q.front();
+    q.pop();
+    cout<<" "<<u<<" ";
+    vis[u]=true;
+    for(int i=0;i<adj[u].size();i++){
+        --in_degree[adj[u][i]];
+        if(in_degree[adj[u][i]]==0 && !vis[adj[u][i]]) 
+            q.push(adj[u][i]);
     }
+    cnt++;
+}
 
-    if(cnt!=n) cout<<"cycle exists";
+if(cnt!=n) cout<<"cycle exists";
 
 }
 
@@ -118,7 +112,3 @@ return 0;
 // a='A';
 // a=a^(1<<5);
 // cout<<a;
-// 
-
-
-

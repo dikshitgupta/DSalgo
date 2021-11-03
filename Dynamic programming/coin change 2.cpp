@@ -1,6 +1,6 @@
 
 
-Return the number of combinations that make up that amount
+// Return the number of combinations that make up that amount
 class Solution {
 public:
 //      vector <vector <int> > dp(amount+1,vector <int> (coins.size(),-1) );
